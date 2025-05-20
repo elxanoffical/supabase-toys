@@ -32,36 +32,74 @@ export default function HomePage() {
     setLoading(false)
   }
 
-  if (loading) return <p className="p-6">Yüklənir...</p>
+  // yüklənir spinner
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+        <div className="animate-spin h-12 w-12 border-4 border-t-purple-600 rounded-full"></div>
+      </div>
+    )
+  }
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-4xl font-extrabold mb-8 text-center">Our Products</h1>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
-        {items.map(i => (
-          <div
-            key={i.id}
-            className="border rounded-lg overflow-hidden hover:shadow-lg transition"
-          >
-            {/* Məhsul şəkli */}
-            <img
-              src={i.imageUrl}
-              alt={i.name}
-              className="w-full h-48 object-cover"
-            />
-            {/* Məhsul məlumat bloku */}
-            <div className="p-4">
-              <h2 className="font-bold text-xl">{i.name}</h2>
-              <p className="text-gray-600 mt-1">{i.description}</p>
-              <p className="mt-2">
-                <span className="font-semibold">{i.price} ₼</span>{' '}
-                {i.in_stock
-                  ? <span className="text-green-600">In Stock</span>
-                  : <span className="text-red-600">Out of Stock</span>}
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-12">
+      <div className="max-w-6xl mx-auto px-6">
+        <h1 className="text-5xl font-extrabold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
+          Our Products
+        </h1>
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
+          {items.map(i => (
+            <div
+              key={i.id}
+              className="
+                group 
+                bg-white bg-opacity-80 
+                rounded-2xl overflow-hidden 
+                shadow-lg hover:shadow-2xl 
+                transition-transform duration-300 transform hover:-translate-y-1 
+                cursor-pointer
+              "
+            >
+              {/* Məhsul şəkli */}
+              <div className="relative h-64 overflow-hidden">
+                <img
+                  src={i.imageUrl}
+                  alt={i.name}
+                  loading="lazy"
+                  className="
+                    w-full h-full 
+                    object-contain object-center 
+                    transition-transform duration-300 group-hover:scale-110 
+                    cursor-pointer
+                  "
+                />
+              </div>
+              {/* Məhsul məlumat bloku */}
+              <div className="p-6">
+                <h2 className="
+                  text-2xl font-semibold mb-2 
+                  group-hover:text-purple-600 
+                  transition-colors duration-300
+                ">
+                  {i.name}
+                </h2>
+                <p className="text-gray-700 text-sm mb-4">{i.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold">{i.price} ₼</span>
+                  {i.in_stock ? (
+                    <span className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                      In Stock
+                    </span>
+                  ) : (
+                    <span className="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">
+                      Out of Stock
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   )

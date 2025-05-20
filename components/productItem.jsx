@@ -116,13 +116,13 @@ export default function ProductItem({ product, onUpdated, onDeleted }) {
   }
 
   return (
-    <div className="flex items-start gap-4 p-4 border rounded-lg bg-white">
+    <div className="flex items-start gap-4 p-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl shadow-lg">
       {/* Məhsul şəkli (preview) */}
       {draft.preview && (
         <img
           src={draft.preview}
           alt={product.name}
-          className="w-20 h-20 object-cover rounded"
+          className="w-20 h-20 object-contain rounded-lg shadow-md border border-gray-200"
         />
       )}
 
@@ -133,14 +133,22 @@ export default function ProductItem({ product, onUpdated, onDeleted }) {
           value={draft.name}
           onChange={handleChange}
           disabled={!isEditing}
-          className={`border p-2 rounded ${isEditing ? 'bg-white' : 'bg-gray-100'}`}
+          className={`py-2 px-3 rounded-lg transition duration-200 ${
+            isEditing
+              ? 'bg-white bg-opacity-80 border-0 focus:outline-none focus:ring-2 focus:ring-purple-300'
+              : 'bg-gray-100'
+          }`}
         />
         <input
           name="description"
           value={draft.description}
           onChange={handleChange}
           disabled={!isEditing}
-          className={`col-span-2 border p-2 rounded ${isEditing ? 'bg-white' : 'bg-gray-100'}`}
+          className={`col-span-2 py-2 px-3 rounded-lg transition duration-200 ${
+            isEditing
+              ? 'bg-white bg-opacity-80 border-0 focus:outline-none focus:ring-2 focus:ring-purple-300'
+              : 'bg-gray-100'
+          }`}
         />
         <input
           name="price"
@@ -148,16 +156,24 @@ export default function ProductItem({ product, onUpdated, onDeleted }) {
           value={draft.price}
           onChange={handleChange}
           disabled={!isEditing}
-          className={`border p-2 rounded ${isEditing ? 'bg-white' : 'bg-gray-100'}`}
+          className={`py-2 px-3 rounded-lg transition duration-200 ${
+            isEditing
+              ? 'bg-white bg-opacity-80 border-0 focus:outline-none focus:ring-2 focus:ring-purple-300'
+              : 'bg-gray-100'
+          }`}
         />
-        <label className={`flex items-center p-2 border rounded ${isEditing ? 'bg-white' : 'bg-gray-100'}`}>
+        <label
+          className={`flex items-center py-2 px-3 rounded-lg transition duration-200 ${
+            isEditing ? 'bg-white bg-opacity-80 border-0' : 'bg-gray-100'
+          }`}
+        >
           <input
             name="in_stock"
             type="checkbox"
             checked={draft.in_stock}
             onChange={handleChange}
             disabled={!isEditing}
-            className="mr-1"
+            className="form-checkbox h-5 w-5 text-purple-500 transition duration-150"
           />
           In Stock
         </label>
@@ -168,7 +184,7 @@ export default function ProductItem({ product, onUpdated, onDeleted }) {
             type="file"
             accept="image/*"
             onChange={handleFile}
-            className="col-span-5 border p-2 rounded"
+            className="col-span-5 py-2 px-3 rounded-lg bg-white bg-opacity-80 transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-300"
           />
         )}
       </div>
@@ -178,23 +194,35 @@ export default function ProductItem({ product, onUpdated, onDeleted }) {
         {!isEditing ? (
           <>
             {/* Edit düyməsi: edit rejimini açır */}
-            <button onClick={() => setIsEditing(true)} className="text-blue-600 hover:text-blue-800 cursor-pointer">
-              <FaEdit size={18}/>
+            <button
+              onClick={() => setIsEditing(true)}
+              className="p-2 bg-white bg-opacity-60 rounded-full hover:bg-opacity-80 transition"
+            >
+              <FaEdit className="text-purple-600 hover:text-purple-800" size={18}/>
             </button>
             {/* Delete düyməsi: sil funksiyasını çağırır */}
-            <button onClick={remove} className="text-red-600 hover:text-red-800 cursor-pointer">
-              <FaTrash size={18}/>
+            <button
+              onClick={remove}
+              className="p-2 bg-white bg-opacity-60 rounded-full hover:bg-opacity-80 transition"
+            >
+              <FaTrash className="text-red-600 hover:text-red-800" size={18}/>
             </button>
           </>
         ) : (
           <>
             {/* Submit icon-u: dəyişiklikləri saxla */}
-            <button onClick={save} className="text-green-600 hover:text-green-800 cursor-pointer">
-              <FaCheck size={18}/>
+            <button
+              onClick={save}
+              className="p-2 bg-white bg-opacity-60 rounded-full hover:bg-opacity-80 transition"
+            >
+              <FaCheck className="text-green-600 hover:text-green-800" size={18}/>
             </button>
             {/* Cancel icon-u: dəyişiklikləri ləğv et */}
-            <button onClick={cancel} className="text-gray-600 hover:text-gray-800 cursor-pointer">
-              <FaTimes size={18}/>
+            <button
+              onClick={cancel}
+              className="p-2 bg-white bg-opacity-60 rounded-full hover:bg-opacity-80 transition"
+            >
+              <FaTimes className="text-gray-600 hover:text-gray-800" size={18}/>
             </button>
           </>
         )}

@@ -36,15 +36,15 @@ export default function AdminPage() {
   }
 
   // Yeni toy əlavə ediləndə state-i yenilə
-  const handleCreated = newToy => {
-    if (newToy) {
-      setToys(prev =>
-        [newToy, ...prev]
-          .filter(item => item != null)
-      )
+ const handleCreated = newToy => {
+    if (newToy && newToy.id) {
+      // yeni gəldiyi an list-in başına əlavə et
+      setToys(prev => [ newToy, ...prev ])
+    } else {
+      // əgər id yoxdursa, bəlkə DB-dən təzədən götürmək daha məqsədəuyğundur
+      fetchToys()
     }
   }
-
   // Mövcud toyu yeniləyəndə state-i əvəzlə
   const handleUpdated = updatedToy => {
     if (!updatedToy) return
@@ -62,12 +62,18 @@ export default function AdminPage() {
     )
   }
 
+ 
+
   // Hələ yüklənirsə
   if (loading) {
     return (
-      <div className="p-6 max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-center">Admin Panel</h1>
-        <p className="p-6">Yüklənir…</p>
+      <div className="p-8 max-w-5xl mx-auto bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl shadow-lg backdrop-blur-sm">
+        <h1 className="text-4xl font-extrabold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500">
+          Admin Panel
+        </h1>
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-500"></div>
+        </div>
       </div>
     )
   }
@@ -75,20 +81,28 @@ export default function AdminPage() {
   // Əgər fetch zamanı xəta baş veribsə
   if (fetchError) {
     return (
-      <div className="p-6 max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-center">Admin Panel</h1>
-        <p className="text-red-600">Xəta: {fetchError}</p>
+      <div className="p-8 max-w-5xl mx-auto bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl shadow-lg backdrop-blur-sm">
+        <h1 className="text-4xl font-extrabold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500">
+          Admin Panel
+        </h1>
+        <p className="text-center text-red-600 font-medium">
+          Xəta: {fetchError}
+        </p>
       </div>
     )
   }
 
   // Əsas render
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold text-center">Admin Panel</h1>
+    <div className="p-8 max-w-5xl mx-auto space-y-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl shadow-2xl backdrop-blur-sm">
+      <h1 className="text-4xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500">
+        Admin Panel
+      </h1>
 
       {/* Yeni toy əlavə etmə formu */}
-      <NewProductForm onCreated={handleCreated} />
+      <div className="bg-white bg-opacity-70 p-6 rounded-xl shadow-inner">
+        <NewProductForm onCreated={handleCreated} />
+      </div>
 
       {/* Mövcud toys-ların siyahısı */}
       <div className="space-y-4">
